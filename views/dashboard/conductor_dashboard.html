@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Conductor</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard de Conductor</h1>
+        <nav>
+            <a href="/logout">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Viajes Disponibles</h2>
+        <table id="available-rides-table">
+            <thead>
+                <tr>
+                    <th>ID Viaje</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Tipo de Vehículo</th>
+                    <th>Precio Estimado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="available-rides-list">
+                </tbody>
+        </table>
+
+        <h2 style="margin-top: 2rem;">Mis Viajes Asignados</h2>
+        <table id="assigned-rides-table">
+            <thead>
+                <tr>
+                    <th>ID Viaje</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Tipo de Vehículo</th>
+                    <th>Precio Estimado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="assigned-rides-list">
+                </tbody>
+        </table>
+    </main>
+
+    <script src="/js/conductor.js"></script>
+</body>
+</html>

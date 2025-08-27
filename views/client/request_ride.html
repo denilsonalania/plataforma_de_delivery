@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Viaje</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Delivery App</div>
+        <nav>
+            <a href="/">Volver a Inicio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2 id="ride-title">Solicitar Viaje</h2>
+        <form id="ride-request-form">
+            <div class="form-group">
+                <label for="origen">Origen:</label>
+                <input type="text" id="origen" placeholder="Ej: Av. Huancavelica 123" required>
+            </div>
+            <div class="form-group">
+                <label for="destino">Destino:</label>
+                <input type="text" id="destino" placeholder="Ej: Jr. Unión 456" required>
+            </div>
+            <input type="hidden" id="vehiculo" value="">
+
+            <div class="ride-details">
+                <p>Distancia:</p>
+                <h3 id="distancia-estimada">0.00 km</h3>
+                <p>Precio Estimado:</p>
+                <h3 id="precio-estimado">S/. 0.00</h3>
+            </div>
+
+            <button type="submit" class="primary-btn">Solicitar Viaje</button>
+        </form>
+    </main>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAOBciKAiqaT4EQvuZ1QkmnCNGJlM_p08&libraries=places"></script>
+    <script src="/js/ride.js"></script>
+</body>
+</html>

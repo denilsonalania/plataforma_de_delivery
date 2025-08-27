@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Menú</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Menú</h1>
+    </header>
+    <main>
+        <h2 id="restaurant-name">Menú de [Restaurante]</h2>
+        <button id="addCategoryBtn">Crear Nueva Categoría</button>
+        <div id="menu-container" class="menu-management">
+            </div>
+    </main>
+
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn category-close">&times;</span>
+            <h3 id="categoryModalTitle">Crear Nueva Categoría</h3>
+            <form id="categoryForm">
+                <input type="hidden" id="categoryId">
+                <label for="categoryName">Nombre de la Categoría:</label>
+                <input type="text" id="categoryName" required>
+                <button type="submit">Guardar Categoría</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn product-close">&times;</span>
+            <h3 id="productModalTitle">Crear Nuevo Producto</h3>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <input type="hidden" id="productCategoryId">
+                <label for="productName">Nombre del Producto:</label>
+                <input type="text" id="productName" required>
+                <label for="productDescription">Descripción:</label>
+                <textarea id="productDescription"></textarea>
+                <label for="productPrice">Precio:</label>
+                <input type="number" id="productPrice" required step="0.01">
+                <label for="productImage">URL de la Imagen:</label>
+                <input type="text" id="productImage">
+                <button type="submit">Guardar Producto</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/menu.js"></script>
+</body>
+</html>
