@@ -1,7 +1,12 @@
-const mysql = require('mysql2/promise');
+const { Pool } = require('pg');
 
 // La URL de conexión se obtiene de las variables de entorno de Render
-const db = mysql.createPool(process.env.DATABASE_URL);
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 console.log('Conexión a la base de datos establecida.');
 
