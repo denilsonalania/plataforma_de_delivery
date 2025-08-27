@@ -18,14 +18,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // --- Conexión a la base de datos ---
-db.getConnection()
-    .then(connection => {
-        console.log('Conexión exitosa a la base de datos.');
-        connection.release();
-    })
-    .catch(err => {
-        console.error('Error al conectar a la base de datos:', err);
-    });
+// La conexión ahora se maneja directamente con el pool,
+// no necesitas una llamada explícita a getConnection() aquí.
+// El error de "Unknown column" ya se solucionó en la base de datos.
 
 // --- Rutas de la API ---
 app.use('/api/restaurantes', restaurantRoutes);
