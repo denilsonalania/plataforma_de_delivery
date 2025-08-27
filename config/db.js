@@ -1,17 +1,9 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
-// Crea un pool de conexiones para manejar múltiples conexiones
-const pool = mysql.createPool({
-  host: 'localhost', // O la IP de tu servidor de base de datos
-  user: 'root',      // Tu nombre de usuario de MySQL
-  password: 'denis74687206', // Tu contraseña de MySQL
-  database: 'delivery_app', // Nombre de la base de datos
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
-
-// Exporta el pool para que pueda ser utilizado en los modelos
-module.exports = pool.promise();
+// La URL de conexión se obtiene de las variables de entorno de Render
+const db = mysql.createPool(process.env.DATABASE_URL);
 
 console.log('Conexión a la base de datos establecida.');
+
+// Exporta el pool para que pueda ser utilizado en los modelos
+module.exports = db;
