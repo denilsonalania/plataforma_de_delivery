@@ -35,7 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${ride.destino}</td>
                     <td>${ride.tipo_vehiculo}</td>
                     <td>S/.${parseFloat(ride.precio_estimado).toFixed(2)}</td>
-                    <td><button class="accept-ride-btn" data-id="${ride.id}">Aceptar Viaje</button></td>
+                    <td>
+                        <button class="view-ride-btn" data-id="${ride.id}">Ver detalles</button>
+                        <button class="accept-ride-btn" data-id="${ride.id}">Aceptar Viaje</button>
+                    </td>
                 `;
                 availableRidesList.appendChild(row);
             });
@@ -76,7 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${ride.destino}</td>
                     <td>${ride.tipo_vehiculo}</td>
                     <td>S/.${parseFloat(ride.precio_estimado).toFixed(2)}</td>
-                    <td><button class="deliver-ride-btn" data-id="${ride.id}">Marcar como Entregado</button></td>
+                    <td>
+                        <button class="view-ride-btn" data-id="${ride.id}">Ver detalles</button>
+                        <button class="deliver-ride-btn" data-id="${ride.id}">Marcar como Entregado</button>
+                    </td>
                 `;
                 assignedRidesList.appendChild(row);
             });
@@ -136,6 +142,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (error) {
                     console.error('Error al entregar viaje:', error);
                 }
+            }
+        }
+
+        // Lógica para Ver Detalles del Viaje
+        if (e.target.classList.contains('view-ride-btn')) {
+            const rideId = e.target.dataset.id;
+            try {
+                const response = await fetch(`/api/rides/${rideId}`, {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const ride = await response.json();
+                    alert(`
+                        Detalles del Viaje:
+                        ID: ${ride.id}
+                        Origen: ${ride.origen}
+                        Destino: ${ride.destino}
+                        Vehículo: ${ride.tipo_vehiculo}
+                        Precio Estimado: S/.${parseFloat(ride.precio_estimado).toFixed(2)}
+                        Cliente: ${ride.nombre_cliente}
+                        Celular: ${ride.celular_cliente}
+                    `);
+                } else {
+                    const errorData = await response.json();
+                    alert(`Error al obtener detalles del viaje: ${errorData.error}`);
+                }
+            } catch (error) {
+                console.error('Error al obtener detalles del viaje:', error);
             }
         }
     });

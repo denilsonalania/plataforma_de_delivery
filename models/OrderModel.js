@@ -2,9 +2,10 @@ const db = require('../config/db');
 
 class OrderModel {
     static async createOrder(userId, total, deliveryAddress, orderDetails) {
+        // CORREGIDO: Se pasa 'pendiente' como parámetro para que sea un valor y no una columna
         const [orderResult] = await db.execute(
-            'INSERT INTO pedidos (id_usuario, total, estado, direccion_entrega) VALUES (?, ?, "pendiente", ?)',
-            [userId, total, deliveryAddress]
+            'INSERT INTO pedidos (id_usuario, total, estado, direccion_entrega) VALUES (?, ?, ?, ?)',
+            [userId, total, 'pendiente', deliveryAddress]
         );
         const orderId = orderResult.insertId;
 
@@ -24,6 +25,7 @@ class OrderModel {
 
     // Función para obtener pedidos con estado 'aceptado' y sin repartidor asignado
     static async getAcceptedOrders() {
+        // CORREGIDO: Se pasa 'aceptado' como parámetro
         const [rows] = await db.execute(
             `SELECT p.id, p.id_usuario, p.total, p.estado, p.direccion_entrega, p.fecha_creacion,
                     u.nombre AS nombre_cliente, u.celular AS celular_cliente, r.nombre AS nombre_restaurante
@@ -33,15 +35,17 @@ class OrderModel {
              LEFT JOIN productos pr ON dp.id_producto = pr.id
              LEFT JOIN categorias c ON pr.id_categoria = c.id
              LEFT JOIN restaurantes r ON c.id_restaurante = r.id
-             WHERE p.estado = "aceptado" AND p.id_repartidor IS NULL
+             WHERE p.estado = ? AND p.id_repartidor IS NULL
              GROUP BY p.id, u.nombre, u.celular, r.nombre, p.id_usuario, p.total, p.estado, p.direccion_entrega, p.fecha_creacion
-            `
+            `,
+            ['aceptado']
         );
         return rows;
     }
 
     // Obtener pedidos asignados a un repartidor
     static async getAssignedOrders(driverId) {
+        // CORREGIDO: Se pasa 'en_camino' como parámetro
         const [rows] = await db.execute(
             `SELECT p.id, p.id_usuario, p.total, p.estado, p.direccion_entrega, p.fecha_creacion,
                     u.nombre AS nombre_cliente, u.celular AS celular_cliente, r.nombre AS nombre_restaurante
@@ -51,26 +55,28 @@ class OrderModel {
              LEFT JOIN productos pr ON dp.id_producto = pr.id
              LEFT JOIN categorias c ON pr.id_categoria = c.id
              LEFT JOIN restaurantes r ON c.id_restaurante = r.id
-             WHERE p.id_repartidor = ? AND p.estado = "en_camino"
+             WHERE p.id_repartidor = ? AND p.estado = ?
              GROUP BY p.id, u.nombre, u.celular, r.nombre, p.id_usuario, p.total, p.estado, p.direccion_entrega, p.fecha_creacion
             `,
-            [driverId]
+            [driverId, 'en_camino']
         );
         return rows;
     }
 
     static async acceptOrder(orderId, driverId) {
+        // CORREGIDO: Se pasan los valores de estado como parámetros
         const [result] = await db.execute(
-            'UPDATE pedidos SET estado = "en_camino", id_repartidor = ? WHERE id = ? AND estado = "aceptado"',
-            [driverId, orderId]
+            'UPDATE pedidos SET estado = ?, id_repartidor = ? WHERE id = ? AND estado = ?',
+            ['en_camino', driverId, orderId, 'aceptado']
         );
         return result.affectedRows > 0;
     }
 
     static async deliverOrder(orderId) {
+        // CORREGIDO: Se pasa 'entregado' como parámetro
         const [result] = await db.execute(
-            'UPDATE pedidos SET estado = "entregado" WHERE id = ?',
-            [orderId]
+            'UPDATE pedidos SET estado = ? WHERE id = ?',
+            ['entregado', orderId]
         );
         return result.affectedRows > 0;
     }
@@ -108,17 +114,18 @@ class OrderModel {
     // Conteo de pedidos entregados
     static async getOrderCountInLast30Days(userId) {
         const [rows] = await db.execute(
-            'SELECT COUNT(*) AS order_count FROM pedidos WHERE id_usuario = ? AND fecha_creacion >= DATE_SUB(NOW(), INTERVAL 30 DAY) AND estado = "entregado"',
-            [userId]
+            'SELECT COUNT(*) AS order_count FROM pedidos WHERE id_usuario = ? AND fecha_creacion >= DATE_SUB(NOW(), INTERVAL 30 DAY) AND estado = ?',
+            [userId, 'entregado']
         );
         return rows[0].order_count;
     }
 
     // Obtener estatus del usuario
     static async getUserStatus(userId) {
+        // CORREGIDO: Se pasa 'entregado' como parámetro
         const [rows] = await db.execute(
-            'SELECT COUNT(*) AS order_count FROM pedidos WHERE id_usuario = ? AND fecha_creacion >= DATE_SUB(NOW(), INTERVAL 30 DAY) AND estado = "entregado"',
-            [userId]
+            'SELECT COUNT(*) AS order_count FROM pedidos WHERE id_usuario = ? AND fecha_creacion >= DATE_SUB(NOW(), INTERVAL 30 DAY) AND estado = ?',
+            [userId, 'entregado']
         );
         const orderCount = rows[0].order_count;
         let status = 'Normal';
