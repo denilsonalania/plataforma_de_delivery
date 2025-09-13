@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const precioEstimadoElement = document.getElementById('precio-estimado');
     const urlParams = new URLSearchParams(window.location.search);
     const vehicleType = urlParams.get('type');
-    const token = localStorage.getItem('token');
 
     let distance = 0;
 
+    // Establecer el título y el tipo de vehículo a partir de los parámetros de la URL
     if (vehicleType) {
         rideTitle.textContent = `Solicitar ${vehicleType.charAt(0).toUpperCase() + vehicleType.slice(1)}`;
         vehiculoInput.value = vehicleType;
@@ -17,20 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const directionsService = new google.maps.DirectionsService();
 
+    // Función para calcular la distancia y el precio
     const calculateDistanceAndPrice = async () => {
-        const origen = document.getElementById('origen').value;
-        const destino = document.getElementById('destino').value;
-        const tipo_vehiculo = vehiculoInput.value;
-
+        const token = localStorage.getItem('token');
         if (!token) {
             alert('Debes iniciar sesión para usar el servicio de transporte.');
             window.location.href = '/login';
             return;
         }
 
+        const origen = document.getElementById('origen').value;
+        const destino = document.getElementById('destino').value;
+        const tipo_vehiculo = vehiculoInput.value;
+
         if (origen && destino && tipo_vehiculo) {
             const request = {
-                origin: origen + ', Tarma, Perú', // Añadimos la ciudad y el país
+                origin: origen + ', Tarma, Perú',
                 destination: destino + ', Tarma, Perú',
                 travelMode: google.maps.TravelMode.DRIVING,
             };
@@ -46,12 +48,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify({ distancia: distance, tipo_vehiculo: tipo_vehiculo })
                 });
-                const data = await precioResponse.json();
-                if (precioResponse.ok) {
-                    precioEstimadoElement.textContent = `S/. ${data.precio}`;
+
+                if (precioResponse.status === 401) {
+                    alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userId');
+                    window.location.href = '/login';
+                    return;
                 }
+
+                if (!precioResponse.ok) {
+                    const errorData = await precioResponse.json();
+                    throw new Error(errorData.error || 'Error desconocido');
+                }
+                const data = await precioResponse.json();
+                precioEstimadoElement.textContent = `S/. ${data.precio}`;
             } catch (error) {
-                console.error('Error al calcular la distancia:', error);
+                console.error('Error al calcular la distancia o el precio:', error);
                 distanciaEstimadaElement.textContent = 'Error al calcular';
                 precioEstimadoElement.textContent = 'S/. 0.00';
                 distance = 0;
@@ -59,9 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Event listener para el envío del formulario
     rideForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
         if (!userId || !token) {
             alert('Debes iniciar sesión para solicitar un viaje.');
@@ -88,6 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
 
+            if (response.status === 401) {
+                alert('Tu sesión ha expirado. Por favor, inicia sesión de nuevo.');
+                localStorage.removeItem('token');
+                localStorage.removeItem('userId');
+                window.location.href = '/login';
+                return;
+            }
+
             if (response.ok) {
                 alert(`¡Viaje solicitado! Tu número de viaje es: ${data.rideId}`);
                 window.location.href = '/';
@@ -101,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Event listeners para cambios en los campos de entrada para activar los cálculos
     const origenInput = document.getElementById('origen');
     const destinoInput = document.getElementById('destino');
 
