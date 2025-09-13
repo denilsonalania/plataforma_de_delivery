@@ -3,8 +3,8 @@ const db = require('../config/db');
 class RideModel {
     static async createRide(userId, origin, destination, vehicleType, price) {
         const [result] = await db.execute(
-            'INSERT INTO viajes (id_usuario, origen, destino, tipo_vehiculo, precio_estimado, estado) VALUES (?, ?, ?, ?, ?, "buscando conductor")',
-            [userId, origin, destination, vehicleType, price]
+            'INSERT INTO viajes (id_usuario, origen, destino, tipo_vehiculo, precio_estimado, estado) VALUES (?, ?, ?, ?, ?, ?)',
+            [userId, origin, destination, vehicleType, price, 'buscando conductor']
         );
         return result.insertId;
     }
