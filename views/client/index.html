@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Pide tu comida a domicilio!</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Delivery App</div>
+        <nav id="auth-links">
+            <a href="/login">Iniciar Sesión</a>
+            <a href="/register">Registrarse</a>
+            <a href="/cart">Mi Carrito</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div id="user-status-container" style="display: none;">
+            <h3>¡Eres un usuario <span id="user-status"></span>!</h3>
+            <p>Por ser un cliente frecuente, tienes un giro en nuestra ruleta de premios.</p>
+        </div>
+
+        <div id="roulette-container" style="display: none;">
+            <h2>¡Gira la Ruleta!</h2>
+            <button id="spin-roulette-btn">Girar Ruleta</button>
+            <p id="prize-result"></p>
+        </div>
+        <h2>Servicios de Transporte</h2>
+        <div class="transport-options">
+            <a href="/request-ride?type=taxi" class="transport-btn taxi-btn">Pedir Taxi</a>
+            <a href="/request-ride?type=mototaxi" class="transport-btn mototaxi-btn">Pedir Mototaxi</a>
+        </div>
+
+        <h2 style="margin-top: 3rem;">Restaurantes Disponibles</h2>
+        <div id="restaurant-list" class="restaurant-grid">
+            <p>Cargando restaurantes...</p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

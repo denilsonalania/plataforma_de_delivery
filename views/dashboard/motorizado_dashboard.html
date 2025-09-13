@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Motorizado</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard de Motorizado</h1>
+        <nav>
+            <a href="/logout">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Pedidos Disponibles</h2>
+        <table id="accepted-orders-table">
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Celular</th>
+                    <th>Restaurante</th>
+                    <th>Dirección de Entrega</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="accepted-orders-list">
+                </tbody>
+        </table>
+
+        <h2 style="margin-top: 2rem;">Mis Pedidos Asignados</h2>
+        <table id="assigned-orders-table">
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Restaurante</th>
+                    <th>Dirección de Entrega</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="assigned-orders-list">
+                </tbody>
+        </table>
+    </main>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modalTitle">Detalle del Pedido #<span id="orderId"></span></h3>
+            <div id="order-details">
+                <p><strong>Cliente:</strong> <span id="client-name"></span></p>
+                <p><strong>Celular del Cliente:</strong> <span id="client-phone"></span></p>
+                <p><strong>Restaurante:</strong> <span id="restaurant-name"></span></p>
+                <hr>
+                <p><strong>Dirección de Entrega:</strong> <span id="delivery-address"></span></p>
+                <p><strong>Estado:</strong> <span id="order-status"></span></p>
+                <p><strong>Total:</strong> <span id="order-total"></span></p>
+
+                <h4>Productos del Pedido:</h4>
+                <ul id="product-list"></ul>
+
+                <div class="modal-actions">
+                    <button id="mark-delivered-btn" class="primary-btn" data-id="">Marcar como Entregado</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/motorizado.js"></script>
+</body>
+</html>

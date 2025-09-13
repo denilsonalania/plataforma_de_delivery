@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito de Compras</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Delivery App</div>
+        <nav>
+            <a href="/">Volver a Inicio</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Mi Carrito</h2>
+        <div id="cart-items-container">
+            <p>El carrito está vacío.</p>
+        </div>
+
+        <div id="cart-summary" style="display:none;">
+            <div class="cart-total">
+                <span>Subtotal:</span>
+                <span id="cart-subtotal">S/.0.00</span>
+            </div>
+            <div class="cart-total">
+                <span>Costo de Envío:</span>
+                <span id="shipping-cost">S/.0.00</span>
+            </div>
+            <div class="cart-total">
+                <h3>Total:</h3>
+                <h3 id="cart-total-price">S/.0.00</h3>
+            </div>
+            <a href="/checkout" id="checkout-btn" class="primary-btn">Proceder al Pago</a>
+        </div>
+
+    </main>
+
+    <script src="/js/cart.js"></script>
+</body>
+</html>

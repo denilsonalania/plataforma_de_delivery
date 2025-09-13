@@ -1,0 +1,378 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+header {
+    background-color: #ff5722;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: 500;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h2 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.restaurant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.restaurant-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: #333;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.restaurant-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.restaurant-info {
+    padding: 1.5rem;
+}
+
+.restaurant-info h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+}
+
+.restaurant-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.restaurant-info .rating {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    color: #ffc107;
+}
+/* Estilos para la página de menú */
+
+.menu-section {
+    margin-bottom: 2rem;
+}
+
+.menu-section h3 {
+    font-size: 1.5rem;
+    color: #ff5722;
+    border-bottom: 2px solid #ff5722;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-info h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.product-info p {
+    font-size: 0.9rem;
+    color: #666;
+    flex-grow: 1;
+}
+
+.product-footer {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-footer span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.add-to-cart-btn {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #e64a19;
+}
+/* Estilos para la página de Checkout */
+.checkout-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.checkout-container h2 {
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.delivery-details, .payment-method, .order-summary {
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.delivery-details h3, .payment-method h3, .order-summary h3 {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #777;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.payment-options label {
+    display: inline-block;
+    margin-right: 15px;
+    color: #777;
+}
+
+.payment-options input {
+    margin-right: 5px;
+}
+
+.order-summary-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    color: #555;
+}
+
+.summary-item strong {
+    color: #333;
+}
+
+.total-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff5722;
+    border-top: 2px solid #eee;
+    padding-top: 1rem;
+    text-align: right;
+}
+
+#checkout-form button {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+#checkout-form button:hover {
+    background-color: #e64a19;
+}
+/* Estilos para el sistema de recompensas */
+
+#user-status-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    border: 2px solid #ffc107;
+}
+
+#user-status-container h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+#user-status-container p {
+    margin-top: 0.5rem;
+    color: #666;
+}
+
+#user-status-container #user-status {
+    font-weight: bold;
+    color: #ffc107;
+}
+
+#roulette-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    border: 2px solid #ff5722;
+}
+
+#roulette-container h2 {
+    color: #ff5722;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+#roulette-container #spin-roulette-btn {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#roulette-container #spin-roulette-btn:hover {
+    background-color: #e64a19;
+}
+
+#prize-result {
+    margin-top: 1.5rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #007bff;
+}
+/* Estilos para los botones de transporte */
+.transport-options {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.transport-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 100px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.transport-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.taxi-btn {
+    background-color: #ffc107; /* Amarillo */
+}
+
+.mototaxi-btn {
+    background-color: #007bff; /* Azul */
+}

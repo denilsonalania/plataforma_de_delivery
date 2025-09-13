@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceder al Pago</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Delivery App</div>
+        <nav>
+            <a href="/cart">Volver al Carrito</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="checkout-container">
+            <h2>Proceder al Pago</h2>
+            <form id="checkout-form">
+                <div class="delivery-details">
+                    <h3>Detalles de la Entrega</h3>
+                    <div class="form-group">
+                        <label for="address">Dirección de Entrega:</label>
+                        <input type="text" id="address" required>
+                    </div>
+                </div>
+
+                <div class="payment-method">
+                    <h3>Método de Pago</h3>
+                    <div class="payment-options">
+                        <label><input type="radio" name="paymentMethod" value="efectivo" checked> Efectivo</label>
+                        <label><input type="radio" name="paymentMethod" value="yape"> Yape/Plin (QR)</label>
+                        <label><input type="radio" name="paymentMethod" value="tarjeta"> Tarjeta de Crédito/Débito</label>
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <h3>Resumen del Pedido</h3>
+                    <div class="order-summary-details">
+                        <div class="summary-item">
+                            <span>Subtotal:</span>
+                            <strong id="subtotal-price">S/.0.00</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Costo de Envío:</span>
+                            <strong id="shipping-cost">S/.0.00</strong>
+                        </div>
+                    </div>
+                    <p class="total-price">Total a Pagar: <span id="total-price">S/.0.00</span></p>
+                    <button type="submit" class="primary-btn">Confirmar y Pagar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAOBciKAiqaT4EQvuZ1QkmnCNGJlM_p08&libraries=places&callback=initAutocomplete">
+    </script>
+    <script src="/js/checkout.js"></script>
+</body>
+</html>

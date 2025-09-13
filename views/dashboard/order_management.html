@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pedidos - Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard de Administración</h1>
+        <nav>
+            <a href="/dashboard">Inicio</a>
+            <a href="/dashboard/negocios">Gestión de Negocios</a>
+            <a href="/dashboard/usuarios">Gestión de Usuarios</a>
+            <a href="/dashboard/pedidos" class="active">Gestión de Pedidos</a>
+            <a href="/logout">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Gestión de Pedidos</h2>
+        <table id="order-table">
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>ID Usuario</th>
+                    <th>Estado</th>
+                    <th>Total</th>
+                    <th>Fecha y Hora</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="order-list">
+                </tbody>
+        </table>
+    </main>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modalTitle">Detalle del Pedido #<span id="orderId"></span></h3>
+            <div id="order-details">
+                <p><strong>Cliente:</strong> <span id="client-name"></span></p>
+                <p><strong>Celular del Cliente:</strong> <span id="client-phone"></span></p>
+                <p><strong>Repartidor Asignado:</strong> <span id="driver-name"></span></p>
+                <p><strong>Restaurante:</strong> <span id="restaurant-name"></span></p>
+                <hr>
+                <p><strong>Dirección de Entrega:</strong> <span id="delivery-address"></span></p>
+                <p><strong>Estado:</strong> <span id="order-status"></span></p>
+                <p><strong>Total:</strong> <span id="order-total"></span></p>
+
+                <h4>Productos del Pedido:</h4>
+                <ul id="product-list"></ul>
+
+                <div class="modal-actions">
+                    <button id="accept-order-btn" class="primary-btn">Aceptar Pedido</button>
+                    <button id="cancel-order-btn" class="delete-btn">Cancelar Pedido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/order.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios - Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard de Administración</h1>
+        <nav>
+            <a href="/dashboard">Inicio</a>
+            <a href="/dashboard/negocios">Gestión de Negocios</a>
+            <a href="/dashboard/usuarios" class="active">Gestión de Usuarios</a>
+            <a href="/dashboard/pedidos">Gestión de Pedidos</a>
+            <a href="/logout">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Gestión de Usuarios</h2>
+        <table id="user-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Celular</th>
+                    <th>Rol</th>
+                    <th>Fecha de Creación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="user-list">
+                </tbody>
+        </table>
+    </main>
+
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modalTitle">Editar Usuario</h3>
+            <form id="userForm">
+                <input type="hidden" id="userId">
+                <p>Nombre: <span id="userName"></span></p>
+                <p>Correo: <span id="userEmail"></span></p>
+                <label for="userPhone">Número de Celular:</label>
+                <input type="text" id="userPhone">
+                <label for="userRole">Cambiar Rol:</label>
+                <select id="userRole">
+                    <option value="cliente">Cliente</option>
+                    <option value="dueño">Dueño</option>
+                    <option value="repartidor">Repartidor</option>
+                    <option value="admin">Administrador</option>
+                    <option value="conductor">Conductor</option> <option value="admin">Administrador</option>
+                </select>
+                <button type="submit">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/user.js"></script>
+</body>
+</html>
