@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function calculateShippingCost(restaurantId) {
         // En una aplicación real, usarías Google Maps para la distancia
-        const dummyDistance = 5;
+        const dummyDistance = 1;
 
         try {
             const response = await fetch(`/api/restaurantes/${restaurantId}`);

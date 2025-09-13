@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lógica para inicializar el autocompletado de Google Maps
     window.initAutocomplete = async () => {
+        const addressInput = document.getElementById('address');
         const autocomplete = new google.maps.places.Autocomplete(addressInput);
         let restaurantLocation;
 
