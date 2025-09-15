@@ -30,7 +30,7 @@ app.use('/api/usuarios', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/pedidos', orderRoutes);
 app.use('/api/rides', rideRoutes);
-app.use('/api', addressRoutes);
+app.use('/api/addresses', addressRoutes);
 
 // --- Rutas de páginas HTML ---
 // Ruta para la página de inicio (cliente)
