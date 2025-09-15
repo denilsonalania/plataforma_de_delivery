@@ -1,20 +1,24 @@
 const jwt = require('jsonwebtoken');
 
-const authMiddleware = (req, res, next) => {
-    const secret = 'mi_clave_secreta_super_segura'; // La misma clave que en authController.js
-    const token = req.headers.authorization?.split(' ')[1];
+// Asegúrate de que esta clave secreta sea la misma que usas para generar el token
+// Idealmente, se debe obtener de una variable de entorno
+const JWT_SECRET = process.env.JWT_SECRET || 'mi_clave_secreta_super_segura';
 
-    if (!token) {
-        return res.status(401).json({ error: 'No autorizado. Token no proporcionado.' });
+exports.authenticateToken = (req, res, next) => {
+    // Obtener el token del encabezado de la autorización
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token == null) {
+        return res.status(401).json({ error: 'Token no proporcionado.' });
     }
 
-    try {
-        const decoded = jwt.verify(token, secret);
-        req.user = decoded; // Se añade la información del usuario al objeto de la solicitud
-        next();
-    } catch (error) {
-        return res.status(401).json({ error: 'Token inválido' });
-    }
+    // Verificar el token
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) {
+            return res.status(403).json({ error: 'Token inválido.' });
+        }
+        req.user = user;
+        next(); // Pasar el control al siguiente middleware o controlador
+    });
 };
-
-module.exports = authMiddleware;
