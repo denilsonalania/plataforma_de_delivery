@@ -21,9 +21,21 @@
             <form id="checkout-form">
                 <div class="delivery-details">
                     <h3>Detalles de la Entrega</h3>
-                    <div class="form-group">
+
+                    <div id="saved-addresses-container" class="form-group" style="display:none;">
+                        <label for="saved-addresses">Direcciones Guardadas:</label>
+                        <select id="saved-addresses" class="form-control">
+                            <option value="">Selecciona una dirección</option>
+                        </select>
+                        <a href="#" id="add-new-address-link">0 ingresa una nueva dirección</a>
+                    </div>
+                    <div id="new-address-container" class="form-group">
                         <label for="address">Dirección de Entrega:</label>
                         <input type="text" id="address" required>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="save-address-checkbox">
+                            <label for="save-address-checkbox">Guardar esta dirección</label>
+                        </div>
                     </div>
                 </div>
 
