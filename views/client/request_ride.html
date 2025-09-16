@@ -1,45 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitar Viaje</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitar Viaje</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="logo">Delivery App</div>
-        <nav>
-            <a href="/">Volver a Inicio</a>
-        </nav>
-    </header>
+  <header>
+    <div class="logo">Delivery App</div>
+    <nav>
+      <a href="/">Volver a Inicio</a>
+    </nav>
+  </header>
 
-    <main class="container">
-        <h2 id="ride-title">Solicitar Viaje</h2>
-        <form id="ride-request-form">
-            <div class="form-group">
-                <label for="origen">Origen:</label>
-                <input type="text" id="origen" placeholder="Ej: Av. Huancavelica 123" required>
-            </div>
-            <div class="form-group">
-                <label for="destino">Destino:</label>
-                <input type="text" id="destino" placeholder="Ej: Jr. Unión 456" required>
-            </div>
-            <input type="hidden" id="vehiculo" value="">
+  <main class="container">
+    <h2 id="ride-title">Solicitar Viaje</h2>
+    <form id="ride-request-form">
+      <div class="form-group">
+        <label for="origen">Origen:</label>
+        <input type="text" id="origen" placeholder="Tu ubicación" required readonly>
+        <button type="button" id="get-location-btn" class="icon-btn">
+          <i class="fas fa-map-marker-alt"></i> Usar mi ubicación
+        </button>
+      </div>
 
-            <div class="ride-details">
-                <p>Distancia:</p>
-                <h3 id="distancia-estimada">0.00 km</h3>
-                <p>Precio Estimado:</p>
-                <h3 id="precio-estimado">S/. 0.00</h3>
-            </div>
+      <div class="form-group">
+        <label for="destino">Destino:</label>
+        <div id="destination-map" style="height: 300px; margin-top: 10px;"></div>
+        <input type="hidden" id="destino">
+        <input type="hidden" id="destino-lat">
+        <input type="hidden" id="destino-lng">
+      </div>
 
-            <button type="submit" class="primary-btn">Solicitar Viaje</button>
-        </form>
-    </main>
+      <input type="hidden" id="vehiculo" value="">
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAOBciKAiqaT4EQvuZ1QkmnCNGJlM_p08&libraries=places"></script>
-    <script src="/js/ride.js"></script>
+      <div class="ride-details">
+        <p>Distancia:</p>
+        <h3 id="distancia-estimada">0.00 km</h3>
+        <p>Precio Estimado:</p>
+        <h3 id="precio-estimado">S/. 0.00</h3>
+      </div>
+
+      <button type="submit" class="primary-btn">Solicitar Viaje</button>
+    </form>
+  </main>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAOBciKAiqaT4EQvuZ1QkmnCNGJlM_p08&libraries=places&callback=initMap"></script>
+
+  <script src="/js/ride.js"></script>
 </body>
 </html>

@@ -22,16 +22,10 @@
                 <div class="delivery-details">
                     <h3>Detalles de la Entrega</h3>
 
-                    <div id="saved-addresses-container" class="form-group" style="display:none;">
-                        <label for="saved-addresses">Direcciones Guardadas:</label>
-                        <select id="saved-addresses" class="form-control">
-                            <option value="">Selecciona una dirección</option>
-                        </select>
-                        <a href="#" id="add-new-address-link">0 ingresa una nueva dirección</a>
-                    </div>
                     <div id="new-address-container" class="form-group">
-                        <label for="address">Dirección de Entrega:</label>
-                        <input type="text" id="address" required>
+                        <label for="address-line">Dirección de Entrega:</label>
+                        <div id="map" style="height: 400px; width: 100%; margin-top: 10px;"></div>
+                        <input type="text" id="address-line" readonly>
                         <div class="checkbox-container">
                             <input type="checkbox" id="save-address-checkbox">
                             <label for="save-address-checkbox">Guardar esta dirección</label>
@@ -67,8 +61,7 @@
         </div>
     </main>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAOBciKAiqaT4EQvuZ1QkmnCNGJlM_p08&libraries=places&callback=initAutocomplete"></script>
-
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAOBciKAiqaT4EQvuZ1QkmnCNGJlM_p08&callback=initMap&libraries=geometry,places"></script>
     <script src="/js/checkout.js"></script>
 </body>
 </html>

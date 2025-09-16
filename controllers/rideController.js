@@ -3,6 +3,7 @@ const RideModel = require('../models/RideModel');
 exports.calculatePrice = async (req, res) => {
     const { distancia, tipo_vehiculo } = req.body;
 
+    // Tarifas de ejemplo (ajústalas a tu negocio)
     const tarifa_taxi = 1.00;
     const tarifa_mototaxi = 0.70;
     const precio_base_taxi = 3.50;
@@ -18,15 +19,26 @@ exports.calculatePrice = async (req, res) => {
 
     res.json({
         precio: precio_final.toFixed(2),
-        distancia: distancia,
+        distancia,
         vehiculo: tipo_vehiculo
     });
 };
 
 exports.requestRide = async (req, res) => {
-    const { userId, origen, destino, tipo_vehiculo, distancia, precio } = req.body;
+    const { userId, origen, destino, destinoLat, destinoLng, tipo_vehiculo, distancia, precio } = req.body;
+
     try {
-        const rideId = await RideModel.createRide(userId, origen, destino, tipo_vehiculo, distancia, precio);
+        const rideId = await RideModel.createRide(
+            userId,
+            origen,
+            destino,
+            destinoLat,
+            destinoLng,
+            tipo_vehiculo,
+            distancia,
+            precio
+        );
+
         res.status(201).json({ message: 'Viaje solicitado exitosamente', rideId });
     } catch (error) {
         console.error('Error al solicitar viaje:', error);

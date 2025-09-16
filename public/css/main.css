@@ -5,6 +5,7 @@ body {
     background-color: #f8f9fa;
 }
 
+/* --- Estilos de Encabezado y Barra de Navegación --- */
 header {
     background-color: #ff5722;
     color: white;
@@ -31,6 +32,7 @@ header nav a:hover {
     text-decoration: underline;
 }
 
+/* --- Estilos del Contenedor Principal --- */
 .container {
     max-width: 1200px;
     margin: 2rem auto;
@@ -43,6 +45,30 @@ h2 {
     margin-bottom: 1.5rem;
 }
 
+/* --- Estilos de la Barra de Búsqueda --- */
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.search-bar input {
+    width: 100%;
+    max-width: 600px;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 50px; /* Bordes redondeados para el estilo de la imagen */
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #ff5722;
+    box-shadow: 0 2px 5px rgba(255,87,34,0.3);
+}
+
+/* --- Estilos de Tarjetas de Restaurante --- */
 .restaurant-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -91,8 +117,8 @@ h2 {
     margin-top: 0.5rem;
     color: #ffc107;
 }
-/* Estilos para la página de menú */
 
+/* --- Estilos para la página de Menú --- */
 .menu-section {
     margin-bottom: 2rem;
 }
@@ -127,53 +153,44 @@ h2 {
     object-fit: cover;
 }
 
-.product-info {
-    padding: 1.5rem;
+.product-card .product-info {
+    padding: 1rem; /* Padding más pequeño para un diseño más compacto */
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
-.product-info h4 {
+.product-card .product-info h4 {
     margin: 0 0 0.5rem;
     font-size: 1.25rem;
     color: #333;
 }
 
-.product-info p {
+.product-card .product-info p {
     font-size: 0.9rem;
     color: #666;
     flex-grow: 1;
 }
 
-.product-footer {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.product-footer span {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #007bff;
-}
-
+/* --- Botón "Añadir al Carrito" mejorado --- */
 .add-to-cart-btn {
     background-color: #ff5722;
     color: white;
     border: none;
-    border-radius: 4px;
-    padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
+    border-radius: 0 0 8px 8px; /* Solo esquinas inferiores redondeadas */
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-align: center;
 }
 
 .add-to-cart-btn:hover {
     background-color: #e64a19;
 }
-/* Estilos para la página de Checkout */
+
+/* --- Estilos para la página de Checkout --- */
 .checkout-container {
     display: flex;
     flex-direction: column;

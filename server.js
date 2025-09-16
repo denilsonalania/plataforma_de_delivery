@@ -12,7 +12,7 @@ const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const rideRoutes = require('./routes/rideRoutes');
-const addressRoutes = require('./routes/addressRoutes');
+
 
 // --- MIDDLEWARES ---
 app.use(express.json());
@@ -30,7 +30,7 @@ app.use('/api/usuarios', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/pedidos', orderRoutes);
 app.use('/api/rides', rideRoutes);
-app.use('/api/addresses', addressRoutes);
+
 
 // --- Rutas de páginas HTML ---
 // Ruta para la página de inicio (cliente)
