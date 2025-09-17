@@ -8,53 +8,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const productModal = document.getElementById('productModal');
     const productForm = document.getElementById('productForm');
 
-    // Mueve la declaración de productPrice dentro del event listener del formulario
-
-    // Eventos para los modales
+    // Button/closer handlers
     document.getElementById('addCategoryBtn').addEventListener('click', () => {
         document.getElementById('categoryModalTitle').textContent = 'Crear Nueva Categoría';
         categoryForm.reset();
         categoryModal.style.display = 'block';
     });
+    document.querySelector('.category-close').addEventListener('click', () => categoryModal.style.display = 'none');
+    document.querySelector('.product-close').addEventListener('click', () => productModal.style.display = 'none');
 
-    document.querySelector('.category-close').addEventListener('click', () => {
-        categoryModal.style.display = 'none';
-    });
-
-    document.querySelector('.product-close').addEventListener('click', () => {
-        productModal.style.display = 'none';
-    });
-
-    // Lógica para cerrar modales al hacer clic fuera
     window.addEventListener('click', (event) => {
-        if (event.target === categoryModal) {
-            categoryModal.style.display = 'none';
-        }
-        if (event.target === productModal) {
-            productModal.style.display = 'none';
-        }
+        if (event.target === categoryModal) categoryModal.style.display = 'none';
+        if (event.target === productModal) productModal.style.display = 'none';
     });
 
-    // Envío del formulario de Categoría
+    // --- Create category ---
     categoryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const categoryName = document.getElementById('categoryName').value;
-        const token = 'fake-token';
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Sesión expirada. Inicia sesión.');
+            window.location.href = '/login';
+            return;
+        }
 
-        const response = await fetch('/api/productos/categorias', {
+        const res = await fetch('/api/productos/categorias', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ name: categoryName, restaurantId })
         });
-        if (response.ok) {
+
+        if (res.ok) {
             categoryModal.style.display = 'none';
             fetchCategoriesAndProducts();
         } else {
+            const text = await res.text().catch(() => null);
+            console.error('Error crear categoría', res.status, text);
             alert('Error al crear categoría.');
         }
     });
 
-    // Envío del formulario de Producto
+    // --- Create product ---
     productForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const productId = document.getElementById('productId').value;
@@ -63,13 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const productDescription = document.getElementById('productDescription').value;
         const productPrice = document.getElementById('productPrice').value;
         const productImage = document.getElementById('productImage').value;
-        const token = 'fake-token';
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Sesión expirada. Inicia sesión.');
+            window.location.href = '/login';
+            return;
+        }
 
-        const method = productId ? 'PUT' : 'POST';
-
-        // --- Lógica Corregida ---
-        let url = method === 'PUT' ? `/api/productos/${productId}` : '/api/productos';
-        // --- Fin de la Lógica Corregida ---
+        const method = 'POST';
+        const url = '/api/productos';
 
         const body = {
             name: productName,
@@ -79,28 +76,50 @@ document.addEventListener('DOMContentLoaded', () => {
             categoryId: productCategoryId
         };
 
-        const response = await fetch(url, {
-            method: method,
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify(body)
-        });
-        if (response.ok) {
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify(body)
+            });
+
+            if (!response.ok) {
+                const txt = await response.text().catch(() => null);
+                console.error(`Error ${method} ${url}`, response.status, txt);
+                alert(`Error al guardar el producto. Estado: ${response.status}`);
+                return;
+            }
+
             productModal.style.display = 'none';
             fetchCategoriesAndProducts();
-        } else {
-            alert(`Error al guardar el producto: ${response.statusText}`);
+        } catch (err) {
+            console.error('Error /save product', err);
+            alert('Error al guardar el producto.');
         }
     });
 
-    // Función principal para cargar el menú
+    // --- Load categories and products ---
     async function fetchCategoriesAndProducts() {
-        const token = 'fake-token';
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Sesión expirada. Inicia sesión.');
+            window.location.href = '/login';
+            return;
+        }
+
         try {
             const categoriesResponse = await fetch(`/api/productos/categorias/${restaurantId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            const categories = await categoriesResponse.json();
 
+            if (!categoriesResponse.ok) {
+                const t = await categoriesResponse.text().catch(() => null);
+                console.error('Error categories', categoriesResponse.status, t);
+                menuContainer.innerHTML = '<p>Error al cargar las categorías.</p>';
+                return;
+            }
+
+            const categories = await categoriesResponse.json();
             menuContainer.innerHTML = '';
 
             for (const category of categories) {
@@ -116,6 +135,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const productsResponse = await fetch(`/api/productos/${category.id}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
+
+                if (!productsResponse.ok) {
+                    const t = await productsResponse.text().catch(() => null);
+                    console.error(`Error fetching products for category ${category.id}`, productsResponse.status, t);
+                    continue;
+                }
+
                 const products = await productsResponse.json();
                 const productList = categoryDiv.querySelector('.product-list');
 
@@ -127,80 +153,62 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>Precio: S/.${product.precio}</p>
                         <p>${product.descripcion}</p>
                         <img src="${product.imagen}" alt="${product.nombre}" style="width:100px;">
-                        <button class="edit-product-btn" data-product-id="${product.id}">Editar</button>
                         <button class="delete-product-btn" data-product-id="${product.id}">Eliminar</button>
                     `;
                     productList.appendChild(productItem);
                 });
             }
-
         } catch (error) {
             console.error('Error al cargar el menú:', error);
             menuContainer.innerHTML = '<p>Error al cargar el menú. Por favor, intente de nuevo.</p>';
         }
     }
 
-    // Delegación de eventos para los botones de editar y eliminar
+    // --- Event delegation: delete / create ---
     menuContainer.addEventListener('click', async (e) => {
-        const token = 'fake-token';
-
-        // Lógica del botón de "Editar Producto"
-        if (e.target.classList.contains('edit-product-btn')) {
-            const productId = e.target.dataset.productId;
-            try {
-                const response = await fetch(`/api/productos/unico/${productId}`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                const product = await response.json();
-
-                document.getElementById('productModalTitle').textContent = 'Editar Producto';
-                document.getElementById('productId').value = product.id;
-                document.getElementById('productName').value = product.nombre;
-                document.getElementById('productDescription').value = product.descripcion;
-                document.getElementById('productPrice').value = product.precio;
-                document.getElementById('productImage').value = product.imagen;
-                document.getElementById('productCategoryId').value = product.id_categoria;
-
-                productModal.style.display = 'block';
-
-            } catch (error) {
-                console.error('Error al cargar datos para editar:', error);
-                alert('Error al cargar datos para editar.');
-            }
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Sesión expirada. Inicia sesión.');
+            window.location.href = '/login';
+            return;
         }
 
-        // Lógica del botón de "Eliminar Producto"
+        // DELETE
         if (e.target.classList.contains('delete-product-btn')) {
             const productId = e.target.dataset.productId;
-            if (confirm('¿Está seguro de que desea eliminar este producto?')) {
-                try {
-                    const response = await fetch(`/api/productos/${productId}`, {
-                        method: 'DELETE',
-                        headers: { 'Authorization': `Bearer ${token}` }
-                    });
+            if (!confirm('¿Está seguro de que desea eliminar este producto?')) return;
+            const url = `/api/productos/${productId}`;
+            try {
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
 
-                    if (response.ok) {
-                        fetchCategoriesAndProducts();
-                    } else {
-                        alert('Error al eliminar el producto.');
-                    }
-                } catch (error) {
-                    console.error('Error al eliminar:', error);
+                if (!response.ok) {
+                    const txt = await response.text().catch(() => null);
+                    console.error('DELETE failed', response.status, txt);
                     alert('Error al eliminar el producto.');
+                    return;
                 }
+
+                fetchCategoriesAndProducts();
+            } catch (error) {
+                console.error('Error al eliminar:', error);
+                alert('Error al eliminar el producto.');
             }
         }
 
-        // Lógica del botón "Crear Producto"
+        // CREATE (open button)
         if (e.target.classList.contains('add-product-btn')) {
             const categoryId = e.target.dataset.categoryId;
             document.getElementById('productModalTitle').textContent = 'Crear Nuevo Producto';
             productForm.reset();
             document.getElementById('productCategoryId').value = categoryId;
+            document.getElementById('productId').value = '';
             productModal.style.display = 'block';
         }
     });
 
-    // Iniciar la carga del menú al entrar en la página
+    // Initialize
     fetchCategoriesAndProducts();
 });

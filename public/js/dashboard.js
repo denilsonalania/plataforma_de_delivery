@@ -43,7 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para obtener y mostrar la lista de restaurantes
     async function fetchRestaurants() {
-        const token = 'fake-token-for-testing'; // Usa un token de prueba
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Sesión expirada. Por favor, inicia sesión de nuevo.');
+            window.location.href = '/login';
+            return;
+        }
         try {
             const response = await fetch('/api/restaurantes', {
                 headers: { 'Authorization': `Bearer ${token}` }
@@ -98,7 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const token = 'fake-token-for-testing'; // Usa un token de prueba
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Sesión expirada. Por favor, inicia sesión de nuevo.');
+            window.location.href = '/login';
+            return;
+        }
+
         const restaurantId = document.getElementById('restaurantId').value;
         const name = document.getElementById('name').value;
         const description = document.getElementById('description').value;
@@ -148,7 +159,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     restaurantList.addEventListener('click', async (e) => {
-        const token = 'fake-token-for-testing'; // Usa un token de prueba
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Sesión expirada. Por favor, inicia sesión de nuevo.');
+            window.location.href = '/login';
+            return;
+        }
         const id = e.target.dataset.id;
 
         if (e.target.classList.contains('edit-btn')) {
