@@ -25,12 +25,16 @@ exports.calculatePrice = async (req, res) => {
 };
 
 exports.requestRide = async (req, res) => {
-    const { userId, origen, destino, destinoLat, destinoLng, tipo_vehiculo, distancia, precio } = req.body;
+    // CORRECCIÓN: Agregué 'origenLat' y 'origenLng'
+    const { userId, origen, origenLat, origenLng, destino, destinoLat, destinoLng, tipo_vehiculo, distancia, precio } = req.body;
 
     try {
         const rideId = await RideModel.createRide(
             userId,
             origen,
+            // CORRECCIÓN: Se pasaron los nuevos parámetros al modelo
+            origenLat,
+            origenLng,
             destino,
             destinoLat,
             destinoLng,
@@ -58,7 +62,7 @@ exports.getAvailableRides = async (req, res) => {
 
 exports.acceptRide = async (req, res) => {
     const { rideId } = req.params;
-    const driverId = req.user.id; // Obtenemos el ID del conductor desde el token JWT
+    const driverId = req.user.id;
 
     try {
         const accepted = await RideModel.acceptRide(rideId, driverId);

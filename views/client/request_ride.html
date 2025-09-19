@@ -21,16 +21,16 @@
     <form id="ride-request-form">
       <div class="form-group">
         <label for="origen">Origen:</label>
-        <input type="text" id="origen" placeholder="Tu ubicación" required readonly>
-        <button type="button" id="get-location-btn" class="icon-btn">
-          <i class="fas fa-map-marker-alt"></i> Usar mi ubicación
-        </button>
+        <input type="text" id="origen" placeholder="Ingresa tu ubicación de origen" required>
+        <div id="origin-map" style="height: 300px; margin-top: 10px;"></div>
+        <input type="hidden" id="origen-lat">
+        <input type="hidden" id="origen-lng">
       </div>
 
       <div class="form-group">
         <label for="destino">Destino:</label>
+        <input type="text" id="destino" placeholder="Ingresa tu ubicación de destino" required>
         <div id="destination-map" style="height: 300px; margin-top: 10px;"></div>
-        <input type="hidden" id="destino">
         <input type="hidden" id="destino-lat">
         <input type="hidden" id="destino-lng">
       </div>

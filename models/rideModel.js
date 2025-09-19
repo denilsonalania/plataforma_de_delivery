@@ -1,12 +1,13 @@
 const db = require('../config/db');
 
 class RideModel {
-    static async createRide(userId, origin, destination, destinoLat, destinoLng, vehicleType, distance, price) {
+    static async createRide(userId, origin, originLat, originLng, destination, destinoLat, destinoLng, vehicleType, distance, price) {
+        // La consulta SQL ahora incluye las nuevas columnas para la latitud y longitud de origen
         const [result] = await db.execute(
             `INSERT INTO viajes
-                (id_usuario, origen, destino, destino_lat, destino_lng, tipo_vehiculo, distancia_km, precio_estimado, estado)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [userId, origin, destination, destinoLat, destinoLng, vehicleType, distance, price, 'buscando conductor']
+                (id_usuario, origen, origen_lat, origen_lng, destino, destino_lat, destino_lng, tipo_vehiculo, distancia_km, precio_estimado, estado)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [userId, origin, originLat, originLng, destination, destinoLat, destinoLng, vehicleType, distance, price, 'buscando conductor']
         );
         return result.insertId;
     }
