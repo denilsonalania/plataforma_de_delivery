@@ -132,31 +132,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 menuContainer.appendChild(categoryDiv);
 
-                const productsResponse = await fetch(`/api/productos/${category.id}`, {
+                // **CORRECCIÓN DE RUTA**: Se ha cambiado la URL a la ruta correcta para obtener productos por categoría.
+                const productsResponse = await fetch(`/api/productos/categoria/${category.id}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
 
                 if (!productsResponse.ok) {
                     const t = await productsResponse.text().catch(() => null);
                     console.error(`Error fetching products for category ${category.id}`, productsResponse.status, t);
+
+                    // Si la respuesta no es OK, muestra un mensaje amigable al usuario.
+                    const productList = categoryDiv.querySelector('.product-list');
+                    productList.innerHTML = '<p>Error al cargar productos.</p>';
                     continue;
                 }
 
                 const products = await productsResponse.json();
                 const productList = categoryDiv.querySelector('.product-list');
 
-                products.forEach(product => {
-                    const productItem = document.createElement('div');
-                    productItem.className = 'product-management-card';
-                    productItem.innerHTML = `
-                        <h4>${product.nombre}</h4>
-                        <p>Precio: S/.${product.precio}</p>
-                        <p>${product.descripcion}</p>
-                        <img src="${product.imagen}" alt="${product.nombre}" style="width:100px;">
-                        <button class="delete-product-btn" data-product-id="${product.id}">Eliminar</button>
-                    `;
-                    productList.appendChild(productItem);
-                });
+                if (products.length > 0) {
+                    products.forEach(product => {
+                        const productItem = document.createElement('div');
+                        productItem.className = 'product-management-card';
+                        productItem.innerHTML = `
+                            <h4>${product.nombre}</h4>
+                            <p>Precio: S/.${product.precio}</p>
+                            <p>${product.descripcion}</p>
+                            <img src="${product.imagen}" alt="${product.nombre}" style="width:100px;">
+                            <button class="delete-product-btn" data-product-id="${product.id}">Eliminar</button>
+                        `;
+                        productList.appendChild(productItem);
+                    });
+                } else {
+                     productList.innerHTML = '<p>No hay productos en esta categoría.</p>';
+                }
             }
         } catch (error) {
             console.error('Error al cargar el menú:', error);
