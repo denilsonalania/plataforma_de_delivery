@@ -9,7 +9,7 @@ function initMap() {
   const origenInput = document.getElementById('origen');
   const destinoInput = document.getElementById('destino');
   const destinoLatInput = document.getElementById('destino-lat');
-  const destinoLngInput = document = document.getElementById('destino-lng');
+  const destinoLngInput = document.getElementById('destino-lng');
 
   const getGeolocationBtn = document.getElementById('get-location-btn');
 
