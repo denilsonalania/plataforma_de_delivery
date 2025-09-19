@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const RideController = require('../controllers/rideController'); // <--- CORRECCIÓN DE MAYÚSCULAS
+const RideController = require('../controllers/RideController'); // <--- CORRECCIÓN DE MAYÚSCULAS
 const authMiddleware = require('../middlewares/authMiddleware');
 
 router.post('/calcular_precio', authMiddleware.authenticateToken, RideController.calculatePrice); // <--- CORRECCIÓN
