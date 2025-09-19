@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const rideController = require('../controllers/RideController');
+const RideController = require('../controllers/RideController'); // <--- CORRECCIÓN DE MAYÚSCULAS
 const authMiddleware = require('../middlewares/authMiddleware');
 
-router.post('/calcular_precio', authMiddleware.authenticateToken, rideController.calculatePrice);
-router.post('/request', authMiddleware.authenticateToken, rideController.requestRide);
-router.get('/available', authMiddleware.authenticateToken, rideController.getAvailableRides);
-router.put('/:rideId/accept', authMiddleware.authenticateToken, rideController.acceptRide);
-router.get('/asignados', authMiddleware.authenticateToken, rideController.getAssignedRides);
-router.put('/:rideId/entregar', authMiddleware.authenticateToken, rideController.deliverRide);
-router.get('/', authMiddleware.authenticateToken, rideController.getAllRides); // <--- Nueva ruta para el dashboard de admin
-router.get('/:rideId', authMiddleware.authenticateToken, rideController.getRideDetails);
+router.post('/calcular_precio', authMiddleware.authenticateToken, RideController.calculatePrice); // <--- CORRECCIÓN
+router.post('/request', authMiddleware.authenticateToken, RideController.requestRide); // <--- CORRECCIÓN
+router.get('/available', authMiddleware.authenticateToken, RideController.getAvailableRides); // <--- CORRECCIÓN
+router.put('/:rideId/accept', authMiddleware.authenticateToken, RideController.acceptRide); // <--- CORRECCIÓN
+router.get('/asignados', authMiddleware.authenticateToken, RideController.getAssignedRides); // <--- CORRECCIÓN
+router.put('/:rideId/entregar', authMiddleware.authenticateToken, RideController.deliverRide); // <--- CORRECCIÓN
+router.get('/', authMiddleware.authenticateToken, RideController.getAllRides); // <--- CORRECCIÓN
+router.get('/:rideId', authMiddleware.authenticateToken, RideController.getRideDetails); // <--- CORRECCIÓN
 
 module.exports = router;
