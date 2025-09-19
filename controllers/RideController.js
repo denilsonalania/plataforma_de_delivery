@@ -1,4 +1,4 @@
-const RideModel = require('../models/RideModel');
+const RideModel = require('../models/rideModel');
 
 exports.calculatePrice = async (req, res) => {
     const { distancia, tipo_vehiculo } = req.body;
