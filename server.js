@@ -18,6 +18,7 @@ const rideRoutes = require('./routes/rideRoutes');
 // --- MIDDLEWARES ---
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 // --- CÓDIGO DE DEPURACIÓN DE RUTAS ---
 function printRoutes(app, routePath) {
@@ -42,7 +43,7 @@ app.use('/api/usuarios', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/pedidos', orderRoutes);
 app.use('/api/rides', rideRoutes);
-app.use(cors());
+
 
 
 // --- Rutas de páginas HTML ---
