@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 categoryDiv.innerHTML = `<h3>${category.nombre}</h3><div class="product-grid" id="category-${category.id}"></div>`;
                 menuContainer.appendChild(categoryDiv);
 
-                const resProducts = await fetch(`/api/productos/${category.id}`);
+                // CORRECCIÓN: URL corregida para obtener productos de una categoría
+                const resProducts = await fetch(`/api/productos/categoria/${category.id}`);
                 const products = await resProducts.json();
                 const productGrid = document.getElementById(`category-${category.id}`);
 
@@ -76,7 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const productId = e.target.dataset.productId;
 
             try {
-                const response = await fetch(`/api/productos/unico/${productId}`);
+                // CORRECCIÓN: URL corregida para obtener un solo producto
+                const response = await fetch(`/api/productos/${productId}`);
                 const product = await response.json();
 
                 if (product) {
@@ -84,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
-                    // --- Nueva lógica: Verificar si el producto es del mismo restaurante ---
                     if (cart.length > 0 && cart[0].id_restaurante !== product.id_restaurante) {
                         const confirmClear = confirm('Tu carrito ya contiene productos de otro restaurante. ¿Quieres limpiar tu carrito y añadir este producto?');
                         if (confirmClear) {
@@ -95,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             return;
                         }
                     }
-                    // --- Fin de la nueva lógica ---
 
                     const existingItem = cart.find(item => item.id === product.id);
 

@@ -6,10 +6,10 @@ module.exports = {
         const { restaurantId } = req.params;
         try {
             const categories = await ProductModel.getCategoriesByRestaurant(restaurantId);
-            res.json(categories);
+            res.json(categories || []);
         } catch (error) {
             console.error('Error al obtener categorías:', error);
-            res.status(500).json({ error: 'Error al obtener categorías' });
+            res.status(500).json({ error: 'Error al obtener categorías', details: error.message });
         }
     },
 
@@ -23,7 +23,7 @@ module.exports = {
             res.status(201).json({ id: newId, message: 'Categoría creada' });
         } catch (error) {
             console.error('Error al crear categoría:', error);
-            res.status(500).json({ error: 'Error al crear categoría' });
+            res.status(500).json({ error: 'Error al crear categoría', details: error.message });
         }
     },
 
@@ -38,7 +38,7 @@ module.exports = {
             }
         } catch (error) {
             console.error('Error al eliminar categoría:', error);
-            res.status(500).json({ error: 'Error al eliminar categoría' });
+            res.status(500).json({ error: 'Error al eliminar categoría', details: error.message });
         }
     },
 
@@ -47,10 +47,10 @@ module.exports = {
         const { categoryId } = req.params;
         try {
             const products = await ProductModel.getProductsByCategory(categoryId);
-            res.json(products);
+            res.json(products || []);
         } catch (error) {
             console.error('Error al obtener productos:', error);
-            res.status(500).json({ error: 'Error al obtener productos' });
+            res.status(500).json({ error: 'Error al obtener productos', details: error.message });
         }
     },
 
@@ -64,7 +64,7 @@ module.exports = {
             res.status(201).json({ id: newId, message: 'Producto creado' });
         } catch (error) {
             console.error('Error al crear producto:', error);
-            res.status(500).json({ error: 'Error al crear producto' });
+            res.status(500).json({ error: 'Error al crear producto', details: error.message });
         }
     },
 
@@ -80,7 +80,7 @@ module.exports = {
             }
         } catch (error) {
             console.error('Error al actualizar producto:', error);
-            res.status(500).json({ error: 'Error al actualizar producto' });
+            res.status(500).json({ error: 'Error al actualizar producto', details: error.message });
         }
     },
 
@@ -95,7 +95,7 @@ module.exports = {
             }
         } catch (error) {
             console.error('Error al eliminar producto:', error);
-            res.status(500).json({ error: 'Error al eliminar producto' });
+            res.status(500).json({ error: 'Error al eliminar producto', details: error.message });
         }
     },
 
@@ -110,7 +110,7 @@ module.exports = {
             }
         } catch (error) {
             console.error('Error al obtener producto por ID:', error);
-            res.status(500).json({ error: 'Error al obtener producto' });
+            res.status(500).json({ error: 'Error al obtener producto', details: error.message });
         }
     }
 };
