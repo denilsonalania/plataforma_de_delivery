@@ -76,10 +76,11 @@ class ProductModel {
      */
     static async getProductById(id) {
         try {
+            // CORRECCIÓN: Se usó LEFT JOIN para evitar errores si la categoría no existe.
             const [rows] = await db.execute(`
                 SELECT p.*, c.id_restaurante
                 FROM productos p
-                JOIN categorias c ON p.id_categoria = c.id
+                LEFT JOIN categorias c ON p.id_categoria = c.id
                 WHERE p.id = ?
             `, [id]);
             // Devuelve el primer resultado o null si no se encuentra.
