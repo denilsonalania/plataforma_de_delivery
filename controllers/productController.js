@@ -69,10 +69,16 @@ module.exports = {
     },
 
     updateProduct: async (req, res) => {
-        const { id } = req.params;
+        const { productId } = req.params; // CORREGIDO: cambié 'id' por 'productId'
         const { name, description, price, image } = req.body;
         try {
-            const updated = await ProductModel.updateProduct(id, name, description, price, image);
+            // CORREGIDO: Pasamos un objeto con las propiedades
+            const updated = await ProductModel.updateProduct(productId, {
+                name,
+                description,
+                price,
+                image
+            });
             if (updated) {
                 res.json({ message: 'Producto actualizado' });
             } else {
@@ -85,9 +91,9 @@ module.exports = {
     },
 
     deleteProduct: async (req, res) => {
-        const { id } = req.params;
+        const { productId } = req.params; // CORREGIDO: cambié 'id' por 'productId'
         try {
-            const deleted = await ProductModel.deleteProduct(id);
+            const deleted = await ProductModel.deleteProduct(productId);
             if (deleted) {
                 res.json({ message: 'Producto eliminado' });
             } else {
@@ -100,9 +106,9 @@ module.exports = {
     },
 
     getProductById: async (req, res) => {
-        const { id } = req.params;
+        const { productId } = req.params; // CORREGIDO: cambié 'id' por 'productId'
         try {
-            const product = await ProductModel.getProductById(id);
+            const product = await ProductModel.getProductById(productId);
             if (product) {
                 res.json(product);
             } else {
