@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const db = require('./config/db');
 
 const app = express();
@@ -41,6 +42,7 @@ app.use('/api/usuarios', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/pedidos', orderRoutes);
 app.use('/api/rides', rideRoutes);
+app.use(cors());
 
 
 // --- Rutas de páginas HTML ---

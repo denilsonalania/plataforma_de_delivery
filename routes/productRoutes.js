@@ -17,3 +17,4 @@ router.get('/:categoryId', getProducts);
 router.post('/', createProduct);
 
 module.exports = router;
+
